@@ -14,16 +14,16 @@ module.exports.config = {
     cooldowns: 5,
 };
 
-const gif = "https://i.imgur.com/2K2kQYx.jpeg";
+const gif = "61566813392744";
 const message = "● ======= 𝐎𝐖𝐍𝐄𝐑 ======= ●                                                          ☟  ========== ☟ ==========  ☟.                                                         ●============================●                              ➻  ────  🅧D 🅚I🅝G🧚🩷🪿";
 
 module.exports.handleEvent = async function({ api, event, client, Users, __GLOBAL }) {
     var { threadID, messageID } = event;
     const lowerCaseMessage = event.body.toLowerCase();
 
-    if (lowerCaseMessage.startsWith("Aadi") || 
-        lowerCaseMessage.startsWith("AADI") || 
-        lowerCaseMessage.startsWith("aadi")) { 
+    if (lowerCaseMessage.startsWith("taha") || 
+        lowerCaseMessage.startsWith("TAHA") || 
+        lowerCaseMessage.startsWith("taha")) { 
 
         const downloadPath = path.join(__dirname, 'Boss-Jpg-Images.jpg');
 
