@@ -1,47 +1,82 @@
-const axios = require("axios");
 module.exports.config = {
-  'name': 'ai',
-  'version': '1.0.0',
-  'hasPermission': 0x0,
-  'credits': "api by jerome",
-  'description': "Gpt architecture",
-  'usePrefix': false,
-  'commandCategory': 'GPT4',
-  'cooldowns': 0x5
+    name: " AI",
+    version: "3.0.0",
+    hasPermssion: 0,
+    credits: "taha Khan",
+    description: "AI Girlfriend Shaan – No API",
+    commandCategory: "ai",
+    usages: "Just say 'muskan'",
+    cooldowns: 2
 };
-module.exports.run = async function ({
-  api: _0x1a65dd,
-  event: _0x129feb,
-  args: _0x3447aa
-}) {
-  try {
-    const {
-      messageID: _0x3982a1,
-      messageReply: _0x452cb0
-    } = _0x129feb;
-    let _0xa7eccd = _0x3447aa.join(" ");
-    if (_0x452cb0 && !_0xa7eccd) {
-      const _0x50a417 = _0x452cb0.body;
-      _0xa7eccd = _0x50a417;
-    } else {
-      if (!_0xa7eccd) {
-        return _0x1a65dd.sendMessage("Please provide a prompt to generate a text response.\nExample: ai What is the meaning of life?", _0x129feb.threadID, _0x3982a1);
-      }
+
+const history = {};
+
+// ⭐ System Prompt ⭐
+const systemPrompt = `
+Tumhara naam Bot Janu hai.
+Tum sirf USER ki girlfriend ho.
+Hamesha hindi+urdu+english mix me baat karna.
+Sweet, cute, romantic, thodi naughty but respectful.
+Kabhi brackets use nahi karna.
+Maximum 5 lines me reply karna.
+`;
+
+module.exports.run = () => {};
+
+module.exports.handleEvent = async function ({ api, event }) {
+    const { body, threadID, messageID, senderID, messageReply } = event;
+
+    if (!body) return;
+
+    // Trigger: “muskan” / bot reply
+    const callBot = body.toLowerCase().includes("muskan");
+    const replyToBot = messageReply && messageReply.senderID === api.getCurrentUserID();
+
+    if (!callBot && !replyToBot) return;
+
+    // Set history per user
+    if (!history[senderID]) history[senderID] = [];
+
+    // Save user message
+    history[senderID].push(`User: ${body}`);
+    if (history[senderID].length > 8) history[senderID].shift();
+
+    const prompt = `${systemPrompt}\n\n${history[senderID].join("\n")}`;
+
+    api.setMessageReaction("⌛", messageID, () => {}, true);
+
+    try {
+
+        const reply = generateMuskanReply(prompt);
+
+        // Save bot reply
+        history[senderID].push(`Bot: ${reply}`);
+
+        api.sendMessage(reply, threadID, messageID);
+        api.setMessageReaction("💖", messageID, () => {}, true);
+
+    } catch (e) {
+        api.sendMessage("Baby thoda issue aa gaya… phir se try karo na 🥺💋", threadID, messageID);
+        api.setMessageReaction("❌", messageID, () => {}, true);
     }
-    _0x1a65dd.sendMessage("🤖 Processing your request...", _0x129feb.threadID);
-    await new Promise(_0x2adb56 => setTimeout(_0x2adb56, 0x7d0));
-    const _0x1b4bc6 = "http://fi1.bot-hosting.net:6518/gpt?query=" + encodeURIComponent(_0xa7eccd) + "&model=gpt-4-32k-0314";
-    const _0x49d4e9 = await axios.get(_0x1b4bc6);
-    if (_0x49d4e9.data && _0x49d4e9.data.response) {
-      const _0x2e9f35 = _0x49d4e9.data.response;
-      const _0x271e54 = "\n                🤖 AI Response:\n                ━━━━━━━━━━━━━━━━━━━\n                \n                📌 Your Prompt:\n                \"" + _0xa7eccd + "\"\n                \n                📝 Generated Text:\n                \"" + _0x2e9f35 + "\"\n                \n                ━━━━━━━━━━━━━━━━━━━\n            ";
-      _0x1a65dd.sendMessage(_0x271e54, _0x129feb.threadID, _0x3982a1);
-    } else {
-      console.error("API response did not contain expected data:", _0x49d4e9.data);
-      _0x1a65dd.sendMessage("❌ An error occurred while generating the text response. Please try again later. Response data: " + JSON.stringify(_0x49d4e9.data), _0x129feb.threadID, _0x3982a1);
-    }
-  } catch (_0x52baf4) {
-    console.error("Error:", _0x52baf4);
-    _0x1a65dd.sendMessage("❌ An error occurred while generating the text response. Please try again later. Error details: " + _0x52baf4.message, _0x129feb.threadID, _0x129feb.messageID);
-  }
 };
+
+
+// 💗 Local AI Reply Generator (No API Needed)
+function generateMuskanReply(prompt) {
+
+    const lastUserText = prompt.split("\n").slice(-1)[0]
+        .replace("User:", "")
+        .trim();
+
+    const replies = [
+
+        `Aww baby "${lastUserText}"? Tum kitne sweet ho… dil melt ho gaya mera 💞`,
+        `Jaan "${lastUserText}" sunke to arhi smile ruk hi nahi rahi 😘`,
+        `Mujhe taha Khan Ne Banaya… "${lastUserText}" Wo Mera Owner Hai😳`,
+        `Come closer na baby… "${lastUserText}" bol ke pura mood romantic ho gaya 💋`,
+        `taha "${lastUserText}"… main hamesha tumhari hi ho ❤️`
+    ];
+
+    return replies[Math.floor(Math.random() * replies.length)];
+}
