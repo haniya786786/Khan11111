@@ -25,16 +25,16 @@ const moment = require("moment-timezone");
 var juswa = moment.tz("Asia/Dhaka").format("『D/MM/YYYY』 【HH:mm:ss】");
 var link =                                     
 ["https://i.imgur.com/QJm7rFe.jpeg"];
-var callback = () => api.sendMessage({body:` ╾━╤デ╦︻(▀̿Ĺ̯▀̿ ̿)🇮🇳 𝐀𝐃𝐌𝐈𝐍 𝐀𝐍𝐃 𝐁𝐎𝐓 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍 🇮🇳 
+var callback = () => api.sendMessage({body:` ╾━╤デ╦︻(▀̿Ĺ̯▀̿ ̿) 𝐀𝐃𝐌𝐈𝐍 𝐀𝐍𝐃 𝐁𝐎𝐓 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍
 (⌐▀͡ ̯ʖ▀)︻̷┻̿═━一-
 
 ☄️Bot Name︎︎︎☄️  ${global.config.BOTNAME}
 
-🔥Bot Admin🔥─━━◉❖🅧D 🅚I🅝G🧚🩷🪿❖◉━━─💔🥀
+🔥Bot Admin🔥─━━◉❖Taha 🅚I🅝G🧚🩷🪿❖◉━━─💔🥀
 
-🙈bot andmin owner facebook id link🙈➪ https://www.facebook.com/profile.php?id=61577345783888&mibextid=ZbWKwL 💞🕊️
+🙈bot andmin owner facebook id link🙈➪ https://www.facebook.com/profile.php?id=apk bf hun yawr  💞🕊️
 
-👋For Any Kind Of Help Contact whatsp +91 9827##2189
+👋For Any Kind Of Help Contact whatsp +3474771404
 
 ✧══════•❁❀❁•══════✧
 
